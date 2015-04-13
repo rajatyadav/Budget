@@ -1,0 +1,29 @@
+<main class="container">
+    <div class="col-lg-4">
+      <h2>Edit existing members</h2>
+      <div class="cleaner_20"></div>
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat='member in members' ng-click='edit(member._id)'> {{ member.firstName[0] }} {{ member.lastName[0] }} </a>
+      </div>
+    </div>
+        <div class="col-lg-8 lbdr">
+            <h2><span class="glyphicon glyphicon-user mleft_10 icon_big"></span>New Member</h2>
+            
+            <div class="div-newMember row">
+              <form name="newMember" class="center-block container-fluid" novalidate>
+                <form-field record='member' field='firstName' live='false' required='true'></form-field>
+                <form-field record='member' field='lastName' live='false' required='true'></form-field>
+                <form-field record='member' field='email' live='false' required='true'></form-field>
+                <form-field record='member' field='contact' live='false' required='true'></form-field>
+                <form-field record='member' field='address' live='false' required='true'></form-field>
+                <div class="row form-group">
+                  <div class="col-sm-6 col-sm-offset-2">
+                    <button class="btn btn-primary btn-block _updateBtn" ng-click="save()" type="button">Add</button>
+                  </div>
+                </div>
+                <center class="_msg successMsg"></center>
+              </form>
+              <a href='/members'><div class="closeIcon"><span class="btn btn-sm btn-default">Back</span></div></a>
+            </div>
+        </div>
+    </main>

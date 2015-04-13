@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" ng-app='BudgetApp'>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Easiest way to do house hold management. Use Budget.">
+  <meta name="author" content="Rajat Yadav">
+
+  <title>Budget</title>
+  <base href='/'></base>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+</head>
+
+<body>
+	<header>
+		<centre>
+			<div class="header_text"><b>Monthly Budget</b></div>
+		</centre>
+	</header>
+
+	<div class='container-fluid'>
+		<div class="row navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><b>Welcome Rajat</b></a>
+          </div>
+          <div class="navbar-collapse collapse in">
+            <ul class="nav navbar-nav">
+              <li id="dashboard"><a href="/dashboard">Dashboard</a></li>
+              <li id="members"><a href="/members">Members</a></li>
+              <li id="contree"><a href="/contree">Contree</a></li>
+              <li id="t_expences"><a href="/expences_today">Today's expences</a></li>
+							<li id="m_expences"><a href="/expences_monthly">Monthly expences</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="../navbar-fixed-top/">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+    </div>
+		<div class='row' ng-view></div>
+	</div>
+
+  <footer class="panel-footer text-center">© Rajat Yadav</footer>
+  
+  <script type="text/javascript" src='lib/jquery/dist/jquery.min.js'></script>
+  <script type="text/javascript" src='lib/bootstrap/dist/js/bootstrap.js'></script>
+  <script type="text/javascript" src='lib/angular/angular.min.js'></script>
+  <script type="text/javascript" src='lib/angular-route/angular-route.min.js'></script>
+  <script type="text/javascript" src='lib/angular-resource/angular-resource.min.js'></script>
+  <script type="text/javascript" src='lib/angular-messages/angular-messages.min.js'></script>
+  <script type="text/javascript" src='src/app.js'></script>
+  <script type="text/javascript" src='src/controller.js'></script>
+  <script type="text/javascript" src='src/factories.js'></script>
+  <script type="text/javascript" src='src/directives.js'></script>
+  <script type="text/javascript" src='src/filters.js'></script>
+  <script type="text/javascript" src='src/all.js'></script>
+</body>
+
+</html>

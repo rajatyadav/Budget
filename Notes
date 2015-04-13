@@ -1,0 +1,9 @@
+Notes
+
+Schema: 
+member {firstName, lastName, email, contact, address}
+memberContree {member_id, contreeToGive, c_given, c_left}
+Expences {member_id, ex_amount, ex_item, dateTime}
+
+
+contree {contree_amount, ex_amount, ex_item, dateTime}
