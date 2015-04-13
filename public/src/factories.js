@@ -1,7 +1,7 @@
 angular.module('BudgetApp')
 	.factory('Member', function ($resource) {
 			return $resource('/api/members/:id', {id : '@id'},{
-        	'update': { method:'PUT'},	
+        	'update': { method:'PUT'}	
 			});
 	})
 	.service('SelectedMemberDetail', function ($http) {
@@ -17,23 +17,31 @@ angular.module('BudgetApp')
       }
   	}
 	})
-
-
   .factory('Expence', function ($resource) {
       return $resource('/api/expences/:id', {id : '@id'},{
           'update': { method:'PUT'},  
       });
   })
-	.service('SelectedExpence', function ($http) {
-		return {
-      get : function(id) {
-        return $http.get('/api/expences/'+ id);	
+  .service('SelectedMemberExpence', function ($http) {
+    return {
+      get : function(user_id) {
+        return $http.get('/api/expences/'+ user_id);
       },
-      save : function() {
-        return $http.post('/api/expences');
-      },
-      delete : function(id) {
-        return $http.delete('/api/expences/'+ id);
+      delete : function(user_id) {
+        return $http.delete('/api/expences/'+ user_id);
       }
-  	}
-	});
+    }
+  });
+	// .service('SelectedExpence', function ($http) {
+	// 	return {
+ //      get : function(id) {
+ //        return $http.get('/api/expences/'+ id);	
+ //      },
+ //      save : function() {
+ //        return $http.post('/api/expences');
+ //      },
+ //      delete : function(id) {
+ //        return $http.delete('/api/expences/'+ id);
+ //      }
+ //  	}
+	// });

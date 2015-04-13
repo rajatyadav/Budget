@@ -36,20 +36,23 @@ angular.module('BudgetApp')
 				}
 		})
 
-		.controller('MembersController', function ($scope, Member, Expence, SelectedMemberDetail, SelectedExpence, $location) {
+		.controller('MembersController', function ($scope, Member, SelectedMemberDetail, SelectedMemberExpence, $location, $rootScope) {
+				$rootScope.PAGE = "members";
 				$scope.members = Member.query();
 
 				$scope.show = function (user_id) {
-					$scope.selectedMember = SelectedMemberDetail.get(user_id);
-					// SelectedMemberDetail.get(user_id)
-					// 	.success(function (result) {
-					// 		$scope.selectedMember = result;
-					// 		// $scope.rescentExpences = Expence.get({ id : user_id });
-					// 	})
+					SelectedMemberDetail.get(user_id)
+						.success(function (result) {
+							$scope.selectedMember = result;
+						})
+					SelectedMemberExpence.get( user_id )
+						.success(function (result) {
+							$scope.rescentExpences = result;
+						})
 				}
 
 				$scope.edit = function (user_id) {
-					$location.url('/editMember/'+user_id);
+					$location.url('/editMember/'+ user_id);
 				}
 		})
 

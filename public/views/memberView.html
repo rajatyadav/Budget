@@ -28,26 +28,26 @@
               </div>
           </div>
             <div>
-                <div class="cleaner_20"></div>
-                <h5>Rescent Expences</h5>
-                <table class="table">
-                  <thead>
-                    <tr class="active">
-                      <th>#</th>
-                      <th>Money</th>
-                      <th>Description</th>
-                      <th>Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat='expence in rescentExpences | reverse  '>
-                      <td>{{ $index + 1 }}</td>
-                      <td>{{ expence.expenceAmount }}</td>
-                      <td>{{ expence.expenceDetail }}</td>
-                      <td>{{ expence.timestamp | date : "MM/dd/yyyy 'at' h:mma" }}</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="cleaner_20"></div>
+              <h5>Rescent Expences</h5>
+              <table class="table">
+                <thead>
+                  <tr class="active">
+                    <th>#</th>
+                    <th>Money</th>
+                    <th>Description</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat='expence in rescentExpences'>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ expence.expenceAmount }}</td>
+                    <td>{{ expence.expenceDetail }}</td>
+                    <td>{{ expence.timestamp | date : "MM/dd/yyyy 'at' h:mma" }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
         </div>
     </main>

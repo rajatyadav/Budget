@@ -35,7 +35,7 @@ router
 	.route('/members/:id')
 		.get(function (req, res) {
 				var collection = db.get('member');
-				collection.findOne(req.dbQuery , function (err, data) {
+				collection.findOne(req.dbQuery, function (err, data) {
 					res.json(data);
 				});
 		})
@@ -74,17 +74,17 @@ router
 			});
 
 router
-	.param('id', function (req, res, next) {
-		req.dbQuery = { member : req.params.id };
+	.param('user_id', function (req, res, next) {
+		req.dbQuery = { member : req.params.user_id };
 		next();
 	})
-	.route('/expences/:id')
+	.route('/expences/:user_id')
 		.get(function (req, res) {
 				var collection = db.get('memberExpences');
 				collection.find(req.dbQuery , function (err, data) {
 					res.json(data);
 				});
-		})
+		});
 			
 
 module.exports = router;
