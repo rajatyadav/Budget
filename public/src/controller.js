@@ -68,6 +68,7 @@ angular.module('BudgetApp')
 					$location.url('/editMember/'+user_id);
 				}
 		})
+
 		.controller('NewMemberController', function ($scope, Member, $location) {
 				$scope.members = Member.query();
 				$scope.edit = function (user_id) {
@@ -91,6 +92,7 @@ angular.module('BudgetApp')
 					}
 				};
 		})
+		
 		.controller('EditMemberController', function ($scope, Member, $location, $routeParams) {
 				$scope.members = Member.query();
 				$scope.member = Member.get({ id : $routeParams.id });
@@ -126,4 +128,61 @@ angular.module('BudgetApp')
 				// 		$location.url('/members');
 				// 	}
 				// };
+		})
+
+		.controller('ContreeController', function ($scope) {
+			var a = []
+		})
+
+		.controller('TodayExpenceController', function ($scope, Member, Expence, $location) {
+				$scope.members = Member.query();
+				$scope.selectedMember = 'Select Member';
+				$scope.rescentExpences = Expence.query().reverse();
+
+				$scope.expence = new Expence({
+					member 				: ['', ''], 
+					expenceAmount	: '', 
+					expenceDetail : ''
+				});
+
+				$scope.submit = function () {
+					if($scope.newExpence.$invalid){
+						$scope.$broadcast('expence:invalid');
+						$scope.successMsg = 'Invalid Field';
+					} else {
+						$scope.expence.$save(function (result) {
+							if (result) {
+								$scope.successMsg = 'Done';
+								$scope.newExpence.$setPristine();
+								$scope.expence.member = ['',''];
+								$scope.selectedMember = 'Select Member';
+								$scope.rescentExpences = Expence.query().reverse();
+							}
+						});
+					}
+				}
+				
+				$scope.select = function (user_id, firstName, lastName) {
+					$scope.selectedMember = firstName + ' ' + lastName;
+					$scope.expence.member[0] = user_id;
+					$scope.expence.member[1] = $scope.selectedMember;
+				}
+		})
+
+		.controller('MonthlyExpenceController', function ($scope, SelectedTimeExpence, $filter ) {
+			var today = new Date();
+			$scope.date = $filter('date')(today, "mediumDate");
+			$scope.calendar = angular.element('.calendar');
+			$scope.calendar.bind('changeDate', function(e){
+      		$scope.date = $filter('date')(e.format('yyyy-mm-dd'), "mediumDate");
+      		$scope.$apply();
+      		$scope.getExpences(e.format('yyyy-mm-dd'))
+  		});
+
+			$scope.getExpences = function (date) {
+				SelectedTimeExpence.get( date )
+					.success(function (result) {
+						$scope.allExpences = result;
+					})
+			}
 		});

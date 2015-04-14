@@ -10,10 +10,10 @@ angular.module('BudgetApp', ['ngRoute', 'ngResource', 'ngMessages'])
 						controller: 'MembersController',
 						templateUrl: 'views/members.html'
 					})
-					.when('/member/:id', {
-						controller: 'MemberViewController',
-						templateUrl: 'views/memberView.html'
-					})
+					// .when('/member/:id', {
+					// 	controller: 'MemberViewController',
+					// 	templateUrl: 'views/memberView.html'
+					// })
 					.when('/newMember', {
 						controller: 'NewMemberController',
 						templateUrl: 'views/newMember.html'
@@ -26,6 +26,16 @@ angular.module('BudgetApp', ['ngRoute', 'ngResource', 'ngMessages'])
 					.when('/contree', {
 						controller: 'ContreeController',
 						templateUrl: 'views/contree.html'
+					})
+
+					.when('/todayExpences', {
+						controller: 'TodayExpenceController',
+						templateUrl: 'views/expences_today.html'
+					})
+
+					.when('/monthlyExpences', {
+						controller: 'MonthlyExpenceController',
+						templateUrl: 'views/expences_monthly.html'
 					})
 
 					.otherwise({

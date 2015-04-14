@@ -7,3 +7,9 @@ Expences {member_id, ex_amount, ex_item, dateTime}
 
 
 contree {contree_amount, ex_amount, ex_item, dateTime}
+
+
+Debug mode
+  > set DEBUG=express:* & node index.js
+
+Resolve timezone problem

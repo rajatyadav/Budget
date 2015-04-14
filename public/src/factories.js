@@ -31,17 +31,14 @@ angular.module('BudgetApp')
         return $http.delete('/api/expences/'+ user_id);
       }
     }
-  });
-	// .service('SelectedExpence', function ($http) {
-	// 	return {
- //      get : function(id) {
- //        return $http.get('/api/expences/'+ id);	
- //      },
- //      save : function() {
- //        return $http.post('/api/expences');
- //      },
- //      delete : function(id) {
- //        return $http.delete('/api/expences/'+ id);
- //      }
- //  	}
-	// });
+  })
+	.service('SelectedTimeExpence', function ($http) {
+		return {
+      get : function(datetime) {
+        return $http.get('/api/expencesTime/'+ datetime);	
+      },
+      delete : function(datetime) {
+        return $http.delete('/api/expencesTime/'+ datetime);
+      }
+  	}
+	});

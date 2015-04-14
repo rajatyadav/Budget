@@ -30,6 +30,10 @@ footer{color:#ADADAD}
 a, .u_setting>li, #add_member{cursor:pointer}
 
 
+/* CALENDAR FORMATING */
+.calendar .datepicker-inline { width: 100%; min-width: 220px }
+.calendar .datepicker table.table-condensed {width: 100%;}
+
 
 /*login*/
 .form-signin, .form-newMember{max-width:320px; margin-top:50px}

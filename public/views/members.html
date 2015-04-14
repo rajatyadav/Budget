@@ -44,7 +44,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ expence.expenceAmount }}</td>
                     <td>{{ expence.expenceDetail }}</td>
-                    <td>{{ expence.timestamp | date : "MM/dd/yyyy 'at' h:mma" }}</td>
+                    <td>{{ expence.timestamp | date : "mediumDate" }}</td>
                   </tr>
                 </tbody>
               </table>

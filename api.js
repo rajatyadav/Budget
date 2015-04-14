@@ -85,6 +85,25 @@ router
 					res.json(data);
 				});
 		});
+
+router
+	.param('datetime', function (req, res, next) {
+		var start = new Date( req.params.datetime ),
+	    	dateParts = req.params.datetime.split('-'),
+	    	y = parseInt(dateParts[0], 10),
+	    	m = parseInt(dateParts[1], 10),
+	    	d = parseInt(dateParts[2], 10),
+      	end = new Date(y, m-1, d+1);  
+    req.dbDateQuery = {timestamp: { $gte: start, $lt: end }};
+		next();
+	})
+	.route('/expencesTime/:datetime')
+		.get(function (req, res) {
+				var collection = db.get('memberExpences');
+				collection.find(req.dbDateQuery, function (err, data) {
+					res.json(data);
+				});
+		});
 			
 
 module.exports = router;

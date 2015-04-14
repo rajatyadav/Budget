@@ -1,0 +1,59 @@
+<main class="container">
+  <div class="col-lg-4">
+      <h2><span class="glyphicon glyphicon-plus mleft_10 icon_big"></span>New Expence</h2>
+      <div class="cleaner_20"></div>
+      <p class="successMsg">{{ successMsg }}</p>
+      <form name='newExpence' novalidate>
+        <div class='form-group'>
+          <div class="dropdown">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <span class="filter-option">{{ selectedMember }}</span>&nbsp;
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a ng-repeat='member in members' ng-click='select(member._id, member.firstName[0], member.lastName[0])'> {{ member.firstName[0] }}  {{ member.lastName[0] }} </a></li>
+            </ul>
+          </div>
+          <input type='hidden' ng-form="member" ng-model='expence.member'>
+        </div>  
+        
+        <div class='form-group' ng-class="{ 'has-error': expenceAmount.$dirty && expenceAmount.$invalid }">
+          <input type="number" ng-form="expenceAmount" ng-model="expence.expenceAmount" class="form-control"  placeholder="Amount" required="true" >
+        </div>
+
+        <div class='form-group' ng-class="{ 'has-error': expenceDetail.$dirty && expenceDetail.$invalid }">
+          <input type="text" ng-form="expenceDetail" ng-model="expence.expenceDetail" class="form-control" placeholder="Description" required="true">
+        </div>
+        
+        <div class='form-group'>
+          <div class="btn btn-primary btn-block" ng-click="submit()">Submit</div>
+        </div>
+      </form>
+  </div>
+  <div class="col-lg-8 lbdr">
+      <h2><span class="glyphicon glyphicon-list mleft_10 icon_big"></span>Today's Expence</h2>
+      <div class="cleaner_20"></div>
+      <div>
+        <table class="table">
+          <thead>
+            <tr class="active">
+              <th>#</th>
+              <th>Money</th>
+              <th>Description</th>
+              <th>Member</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='expence in rescentExpences | reverse '>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ expence.expenceAmount }}</td>
+              <td>{{ expence.expenceDetail }}</td>
+              <td>{{ expence.member[1] }}</td>
+              <td>{{ expence.timestamp | date : "MM/dd/yyyy 'at' h:mma" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</main>

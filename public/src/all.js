@@ -54,5 +54,4 @@ function clickEvents() {
 $(document).ready(function(){
 	init();
 	clickEvents();
-
 });
