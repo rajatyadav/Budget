@@ -1,5 +1,5 @@
 <main class="container">
-  <div class="col-lg-4">
+  <div class="col-sm-4">
       <h2><span class="glyphicon glyphicon-plus mleft_10 icon_big"></span>New Expence</h2>
       <div class="cleaner_20"></div>
       <p class="successMsg">{{ successMsg }}</p>
@@ -30,7 +30,7 @@
         </div>
       </form>
   </div>
-  <div class="col-lg-8 lbdr">
+  <div class="col-sm-8 lbdr">
       <h2><span class="glyphicon glyphicon-list mleft_10 icon_big"></span>Today's Expence</h2>
       <div class="cleaner_20"></div>
       <div>
@@ -39,7 +39,7 @@
             <tr class="active">
               <th>#</th>
               <th>Money</th>
-              <th>Description</th>
+              <th class='col-md-3'>Description</th>
               <th>Member</th>
               <th>Time</th>
             </tr>
@@ -50,7 +50,7 @@
               <td>{{ expence.expenceAmount }}</td>
               <td>{{ expence.expenceDetail }}</td>
               <td>{{ expence.member[1] }}</td>
-              <td>{{ expence.timestamp | date : "MM/dd/yyyy 'at' h:mma" }}</td>
+              <td>{{ expence.timestamp | date : "shortTime" }}</td>
             </tr>
           </tbody>
         </table>

@@ -64,15 +64,17 @@ router
 					});
 			})
 			.post(function (req, res) {
-					var date = new Date();
 					var expence = req.body;
-					expence.timestamp = date;
+					var dateParts = expence.timestamp.split('-'),
+			    	y = parseInt(dateParts[0], 10),
+			    	m = parseInt(dateParts[1], 10),
+			    	d = parseInt(dateParts[2], 10);
+		      expence.timestamp = new Date(y, m-1, d, 12, 0, 0);
 					var collection = db.get('memberExpences');
 					collection.insert(expence, function (err, data) {
 						res.json(200);
 					})
 			});
-
 router
 	.param('user_id', function (req, res, next) {
 		req.dbQuery = { member : req.params.user_id };
@@ -83,6 +85,25 @@ router
 				var collection = db.get('memberExpences');
 				collection.find(req.dbQuery , function (err, data) {
 					res.json(data);
+				});
+		});
+router
+	.param('id', function (req, res, next) {
+		req.dbUpdateQuery = { _id : req.params.id };
+		next();
+	})
+	.route('/expences/:id')
+		.get(function (req, res) {
+				var collection = db.get('memberExpences');
+				collection.findOne(req.dbUpdateQuery, function (err, data) {
+					res.json(data);
+				});
+		})
+		.put(function (req, res) {
+				var updatedExpence = req.body;
+				var collection = db.get('memberExpences');
+				collection.update(req.dbUpdateQuery, updatedExpence, function (err, data) {
+					res.json(200);
 				});
 		});
 
@@ -105,5 +126,51 @@ router
 				});
 		});
 			
+
+router
+	.use(bodyParser.json())
+	.route('/contree')
+		.get(function (req, res) {
+				var collection = db.get('memberContree');
+				collection.find({}, {}, function (err, data) {
+					res.json(data);
+				});
+		})
+		.post(function (req, res) {
+				var date = new Date();	
+				var contree = req.body;
+				contree.timestamp = date;
+				var collection = db.get('memberContree');
+				collection.insert(contree, function (err, data) {
+					res.json(data);
+				})
+		})
+
+router
+	.param('id', function (req, res, next) {
+		req.dbContreeQuery = { _id : req.params.id };
+		next();
+	})
+	.route('/contree/:id')
+			.put(function (req, res) {
+					var memberCon = req.body;
+					var collection = db.get('memberContree');
+					collection.update(req.dbContreeQuery, memberCon, function (err, data) {
+					res.json(data[0]);
+				});
+			})
+
+router
+	.param('memberId', function (req, res, next) {
+		req.dbQuery = { member : req.params.memberId };
+		next();
+	})
+	.route('/contree/:memberId')
+			.get(function (req, res) {
+					var collection = db.get('memberContree');
+					collection.findOne(req.dbQuery, function (err, data) {
+						res.json(data);
+					});
+			})
 
 module.exports = router;

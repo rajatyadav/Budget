@@ -1,9 +1,21 @@
 Notes
+-------------
+
+
+To Do
+-------------
+Resolve timezone problem
+
+1. Limit max number contree to enter
+2. Restrict to add multiple contree for same month
+
+
 
 Schema: 
+-------------
 member {firstName, lastName, email, contact, address}
-memberContree {member_id, contreeToGive, c_given, c_left}
-Expences {member_id, ex_amount, ex_item, dateTime}
+memberContree {member:[id, name], contreeToGive, c_given, c_left}
+memberExpences {member:[id, name], ex_amount, ex_item, dateTime}
 
 
 contree {contree_amount, ex_amount, ex_item, dateTime}
@@ -12,4 +24,3 @@ contree {contree_amount, ex_amount, ex_item, dateTime}
 Debug mode
   > set DEBUG=express:* & node index.js
 
-Resolve timezone problem

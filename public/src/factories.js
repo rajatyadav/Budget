@@ -19,8 +19,15 @@ angular.module('BudgetApp')
 	})
   .factory('Expence', function ($resource) {
       return $resource('/api/expences/:id', {id : '@id'},{
-          'update': { method:'PUT'},  
+          'update': { method:'PUT'},
       });
+  })
+  .service('SelectedExpence', function ($http) {
+    return {
+      get : function(id) {
+        return $http.get('/api/expences/'+ id);
+      }
+    }
   })
   .service('SelectedMemberExpence', function ($http) {
     return {
@@ -41,4 +48,11 @@ angular.module('BudgetApp')
         return $http.delete('/api/expencesTime/'+ datetime);
       }
   	}
-	});
+	})
+
+  .factory('Contree', function ($resource) {
+      return $resource('/api/contree/:id', {id : '@id'},{
+          'update': { method:'PUT'}
+      });
+  })
+

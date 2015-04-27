@@ -1,74 +1,109 @@
 <main class="container">
-  <div class="col-lg-4">
+  <div class="col-sm-4">
     <div class="clearfix">
-        <h2><span class="glyphicon glyphicon-calendar mleft_10 icon_big"></span>This month</h2>
-        <div class="col-lg-6 countBlock clear_padding">
-            <span>Contree left: </span><h3 class="clear_margin">3500</h3>
-        </div>
-        <div class="col-lg-6 countBlock clear_padding">
-            <span>Yet to come: </span><h3 class="clear_margin">3500</h3>
-        </div>
-        <div class="col-lg-6 countBlock clear_padding">
-            <span>Contree total: </span><h3 class="clear_margin">3500</h3>
-        </div>
-    </div>
-
-    <div class="clearfix tbdr">
         <h2><span class="glyphicon glyphicon-plus mleft_10 icon_big"></span>New Expence</h2>
-        <div class="cleaner_20"></div>
-        <p class="successMsg">{{ successMsg }}</p>
         <form name='newExpence' novalidate>
-          <div class='form-group'>
-            <div class="dropdown">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <div class='row cleaner_20 col-sm-12 from-group'>
+            <p ng-class="newExpence.$invalid && newExpence.$dirty ? 'text-danger' : 'text-success'">{{ successMsg }}</p>
+          </div>
+          <div class='row '>
+            <div class="dropdown col-sm-6 form-group" ng-class="{ 'has-error': expence.member[0].$dirty && expence.member[0].$invalid }">
+              <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 <span class="filter-option">{{ selectedMember }}</span>&nbsp;
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a ng-repeat='member in members' ng-click='select(member._id, member.firstName[0], member.lastName[0])'> {{ member.firstName[0] }}  {{ member.lastName[0] }} </a></li>
+                <li><a ng-repeat='member in members' ng-click='selectMember(member._id, member.firstName[0], member.lastName[0])'> {{ member.firstName[0] }}  {{ member.lastName[0] }} </a></li>
               </ul>
+              <input type='hidden' name='member' ng-form="member" ng-model='expence.member[0]' required='true'>
             </div>
-            <input type='hidden' ng-form="member" ng-model='expence.member'>
-          </div>  
+            <div class="col-sm-6 form-group"  ng-class="{ 'has-error' : newExpence.date.$dirty && newExpence.date.$invalid }">
+              <input type="text" name='date' ng-model='date' class="form-control calendar" required='true' />
+            </div>
+          </div>
           
           <div class='form-group' ng-class="{ 'has-error': expenceAmount.$dirty && expenceAmount.$invalid }">
-            <input type="number" ng-form="expenceAmount" ng-model="expence.expenceAmount" class="form-control"  placeholder="Amount" required="true" >
+            <input type="number" name='expenceAmount' ng-form="expenceAmount" ng-model="expence.expenceAmount" class="form-control"  placeholder="Amount" required="true" >
           </div>
 
           <div class='form-group' ng-class="{ 'has-error': expenceDetail.$dirty && expenceDetail.$invalid }">
-            <input type="text" ng-form="expenceDetail" ng-model="expence.expenceDetail" class="form-control" placeholder="Description" required="true">
+            <input type="text" name='expenceDetail' ng-form="expenceDetail" ng-model="expence.expenceDetail" class="form-control" placeholder="Description" required="true">
           </div>
           
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name='payStatus' ng-form="payStatus" ng-model="expence.payStatus" > Paid
+            </label>
+          </div>
+
           <div class='form-group'>
             <div class="btn btn-primary btn-block" ng-click="submit()">Submit</div>
           </div>
         </form>
     </div>
   </div>
-  <div class="col-lg-8 lbdr">
-      <h2><span class="glyphicon glyphicon-list mleft_10 icon_big"></span>Rescent expences</h2>
+  <div class="col-sm-8 lbdr">
+      <div class="clearfix">
+        <h2>
+          <span class="glyphicon glyphicon-calendar mleft_10 icon_big"></span>
+          <span>{{ month | date : 'MMM, yyyy' }}</span>
+          <span class='small'>overview</span>
+        </h2>
+        <div class='cleaner_20 tbdr'></div>
+        <div class="col-sm-4 countBlock clear_padding">
+            <a href='/contree'>Total Contree: </a><h3 class="clear_margin">{{ getMothlyTotal() }}</h3>
+        </div>
+        <div class="col-sm-4 countBlock clear_padding">
+            <a href='/contree'>Yet to come: </a><h3 class="clear_margin">{{ getMothlyTotal() - getMothlyRemaining() }}</h3>
+        </div>
+        <div class="col-sm-4 countBlock clear_padding">
+            <span>Remaining Contree: </span><h3 class="clear_margin">3500</h3>
+        </div>
+      </div>
+
       <div class="cleaner_20"></div>
+      
+      <h2><span class="glyphicon glyphicon-list mleft_10 icon_big"></span>Rescent expences</h2>
+      <div class="cleaner_20 tbdr"></div>
       <div class="dashboard_expences">
         <table class="table">
           <thead>
             <tr class="active">
               <th>#</th>
               <th>Money</th>
-              <th>Description</th>
+              <th class='col-md-3'>Description</th>
               <th>Member</th>
               <th>Time</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat='expence in rescentExpences | reverse | limitTo: 6 '>
-              <td>{{ $index + 1 }}</td>
+              <td><label>{{ $index + 1 }}</label></td>
               <td>{{ expence.expenceAmount }}</td>
               <td>{{ expence.expenceDetail }}</td>
-              <td>{{ expence.member[1] }}</td>
+              <td><a ng-click='show(expence.member[0])'>{{ expence.member[1] }}<a></td>
               <td>{{ expence.timestamp | date : "mediumDate" }}</td>
+              <td class='bg-info text-center' ng-switch='expence.payStatus'>
+                <label ng-switch-when='true'>Paid</label>
+                <label ng-switch-when='false'>Unpaid</label>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
   </div>
 </main>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var LimitDate = new Date();
+    $('.calendar').datepicker({
+      todayHighlight: true,
+      keyboardNavigation: false,
+      format: "M dd, yyyy",
+      autoclose: true,
+      startDate : "04/01/2015",
+      endDate : LimitDate 
+    })
+  });
+</script>

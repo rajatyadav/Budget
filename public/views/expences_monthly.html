@@ -1,11 +1,11 @@
 <main class="container" ng-controller='MonthlyExpenceController'>
-    <div class="col-lg-4">
-      <h2>Get all expences</h2>
+    <div class="col-sm-4">
+      <h2><span class="glyphicon glyphicon-calendar mleft_10 icon_big"></span>Get all expences</h2>
       <p class='text-primary'>Select date to get the details.</p>
       <div class="cleaner_20"></div>
       <div class='calendar' ng-model='calendar'></div>
     </div>
-    <div class="col-lg-8 lbdr">
+    <div class="col-sm-8 lbdr">
       <h2><span class="glyphicon glyphicon-list mleft_10 icon_big"></span>Expence on <span class='text-primary'>{{ date }}</span></h2>
       <div class="cleaner_20"></div>
       <table class="table">
@@ -13,7 +13,7 @@
           <tr class="active">
             <th>#</th>
             <th>Money</th>
-            <th>Description</th>
+            <th class='col-md-3'>Description</th>
             <th>Member</th>
             <th>Time</th>
           </tr>
@@ -32,8 +32,12 @@
 </main>
 <script type="text/javascript">
   $(document).ready(function () {
+    var LimitDate = new Date();
     $('.calendar').datepicker({
-      todayHighlight: true
+      todayHighlight: true,
+      keyboardNavigation: false,
+      startDate : "04/01/2015",
+      endDate : LimitDate 
     })
   });
 </script>
