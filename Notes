@@ -10,6 +10,10 @@ Resolve timezone problem
 2. Restrict to add multiple contree for same month
 
 
+Done
+	Combime '/member' and '/member:id' page
+
+
 
 Schema: 
 -------------
@@ -24,3 +28,6 @@ contree {contree_amount, ex_amount, ex_item, dateTime}
 Debug mode
   > set DEBUG=express:* & node index.js
 
+
+db.users.findOne({_id : ObjectId("554095821c3237280eb9eb1e")}) -- [mongo]
+db.users.findOne({_id : ObjectId("554095821c3237280eb9eb1e")})

@@ -2,25 +2,23 @@ var express 		= require('express'),
 		mongo				= require('mongodb'),
 		monk				= require('monk'),
 		bodyParser 	= require('body-parser'),
-
+		users				= require('./accounts'),
 		db					= monk('localhost:27017/budget');
 		router			= express.Router();
 
 router
-	// .use(function (req, res, next) {
-	// 	if( !req.member ) res.member = { id:1 };
-	// 	next();
-	// })
 	.use(bodyParser.json())
+	.use(users)
 	.route('/members')
 			.get(function (req, res) {
 					var collection = db.get('member');
-					collection.find({}, {}, function (err, data) {
+					collection.find({ userId : req.user._id }, {}, function (err, data) {
 						res.json(data);
 					});
 			})
 			.post(function (req, res) {
 					var member = req.body;
+					member.userId = req.user._id;
 					var collection = db.get('member');
 					collection.insert(member, function (err, data) {
 						res.json(data);
@@ -29,7 +27,7 @@ router
 
 router
 	.param('id', function (req, res, next) {
-		req.dbQuery = { _id: req.params.id };
+		req.dbQuery = { _id: req.params.id, userId : req.user._id };
 		next();
 	})
 	.route('/members/:id')
@@ -41,6 +39,7 @@ router
 		})
 		.put(function (req, res) {
 				var member = req.body;
+				member.userId = req.user._id;
 				var collection = db.get('member');
 				collection.update(req.dbQuery, member, function (err, data) {
 					res.json(data[0]);
@@ -59,7 +58,7 @@ router
 	.route('/expences')
 			.get(function (req, res) {
 					var collection = db.get('memberExpences');
-					collection.find({}, {}, function (err, data) {
+					collection.find({userId : req.user._id}, {}, function (err, data) {
 						res.json(data);
 					});
 			})
@@ -70,6 +69,7 @@ router
 			    	m = parseInt(dateParts[1], 10),
 			    	d = parseInt(dateParts[2], 10);
 		      expence.timestamp = new Date(y, m-1, d, 12, 0, 0);
+		      expence.userId = req.user._id;// added
 					var collection = db.get('memberExpences');
 					collection.insert(expence, function (err, data) {
 						res.json(200);
@@ -89,7 +89,7 @@ router
 		});
 router
 	.param('id', function (req, res, next) {
-		req.dbUpdateQuery = { _id : req.params.id };
+		req.dbUpdateQuery = { _id : req.params.id, userId : req.user._id };//added
 		next();
 	})
 	.route('/expences/:id')
@@ -101,6 +101,12 @@ router
 		})
 		.put(function (req, res) {
 				var updatedExpence = req.body;
+				var dateParts = updatedExpence.timestamp.split('-'),
+			    	y = parseInt(dateParts[0], 10),
+			    	m = parseInt(dateParts[1], 10),
+			    	d = parseInt(dateParts[2], 10);
+		      updatedExpence.timestamp = new Date(y, m-1, d, 12, 0, 0);
+		    updatedExpence.userId = req.user._id //added
 				var collection = db.get('memberExpences');
 				collection.update(req.dbUpdateQuery, updatedExpence, function (err, data) {
 					res.json(200);
@@ -115,7 +121,7 @@ router
 	    	m = parseInt(dateParts[1], 10),
 	    	d = parseInt(dateParts[2], 10),
       	end = new Date(y, m-1, d+1);  
-    req.dbDateQuery = {timestamp: { $gte: start, $lt: end }};
+    req.dbDateQuery = {timestamp: { $gte: start, $lt: end },  userId : req.user._id}; //added
 		next();
 	})
 	.route('/expencesTime/:datetime')
@@ -132,7 +138,7 @@ router
 	.route('/contree')
 		.get(function (req, res) {
 				var collection = db.get('memberContree');
-				collection.find({}, {}, function (err, data) {
+				collection.find({ userId : req.user._id }, {}, function (err, data) {
 					res.json(data);
 				});
 		})
@@ -140,6 +146,7 @@ router
 				var date = new Date();	
 				var contree = req.body;
 				contree.timestamp = date;
+				contree.userId = req.user._id;
 				var collection = db.get('memberContree');
 				collection.insert(contree, function (err, data) {
 					res.json(data);
@@ -148,12 +155,13 @@ router
 
 router
 	.param('id', function (req, res, next) {
-		req.dbContreeQuery = { _id : req.params.id };
+		req.dbContreeQuery = { _id : req.params.id,  userId : req.user._id };
 		next();
 	})
 	.route('/contree/:id')
 			.put(function (req, res) {
 					var memberCon = req.body;
+					memberCon.userId = req.user._id;
 					var collection = db.get('memberContree');
 					collection.update(req.dbContreeQuery, memberCon, function (err, data) {
 					res.json(data[0]);

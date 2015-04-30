@@ -1,0 +1,66 @@
+<main class="container">
+  <div class="col-sm-4">
+    <h2>
+      <span class="glyphicon glyphicon-calendar mleft_10 icon_big"></span>
+      <span>{{ month | date : 'MMM, yyyy' }}</span>
+      <span class='small'>overview</span>
+    </h2>
+    <div class='cleaner_20 tbdr'></div>
+    <div class="col-sm-6 countBlock clear_padding">
+        <span>Total Contree: </span><h3 class="clear_margin">{{ getMothlyTotal() }}</h3>
+    </div>
+    <div class="col-sm-6 countBlock clear_padding">
+        <span>Yet to come: </span><h3 class="clear_margin">{{ getMothlyTotal() - getMothlyRemaining() }}</h3>
+    </div>
+    <div class="col-sm-6 countBlock clear_padding">
+        <span>Remaining Contree: </span><h3 class="clear_margin">3500</h3>
+    </div>
+  </div>
+  <div class="col-sm-8 lbdr">
+      <div class="row">
+        <div class="col-sm-12">
+          <a href="/contree"><div class="closeIcon cleaner_20"><span class="btn btn-sm btn-default">Back</span></div></a>
+          <h3 class='text-primary left'><span class="glyphicon glyphicon-user mleft_10"></span>New Contree</h3>
+        </div>
+      </div>
+      <div class='cleaner_20'></div>
+
+      <div class="row">
+        <form name="memberContree" class="center-block container-fluid" novalidate>
+          <div class="row form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+              <div class="dropdown" ng-class="{ 'has-error': memberCon.member[0].$dirty && memberCon.member[0].$invalid }">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <span class="filter-option">{{ selectedMember }}</span>&nbsp;
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a ng-repeat='member in members' ng-click='select(member._id, member.firstName[0], member.lastName[0])'> {{ member.firstName[0] }}  {{ member.lastName[0] }} </a></li>
+                </ul>
+                <input type='hidden' name='member' ng-form="member" ng-model='memberCon.member[0]' required='true'>
+              </div>
+            </div>
+          </div>
+          <form-field record='memberCon' field='monthContree' live='false' required='true'></form-field>
+          <form-field record='memberCon' field='contreeGiven' live='false' required='true'></form-field>
+
+          <div class="row form-group">
+            <label class='col-sm-3 control-label text-right'>Remaining Amount</label>
+            <div class="col-sm-5 text-danger">
+              {{ memberCon.monthContree[0] - memberCon.contreeGiven[0] }}
+            </div>
+          </div>
+          
+
+          <div class="row form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+              <button class="btn btn-primary btn-block _updateBtn" ng-click="save()" type="button">Add</button>
+            </div>
+          </div>
+          <div class='row col-sm-5 col-sm-offset-3 from-group'>
+            <p ng-show='memberContree.$invalid && memberContree.$dirty' ng-class="memberContree.$invalid && memberContree.$dirty ? 'text-danger' : 'text-success'">{{ successMsg }}</p>
+          </div>
+        </form>
+      </div>
+  </div>
+</main>

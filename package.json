@@ -1,0 +1,28 @@
+{
+  "name": "Budget",
+  "version": "0.0.0",
+  "description": "",
+  "main": "accounts.js",
+  "dependencies": {
+    "express": "^4.12.3",
+    "body-parser": "^1.12.2",
+    "express-session": "^1.11.1",
+    "mongodb": "^2.0.25",
+    "monk": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rajatyadav/Budget.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rajatyadav/Budget/issues"
+  },
+  "homepage": "https://github.com/rajatyadav/Budget"
+}

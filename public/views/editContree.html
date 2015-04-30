@@ -1,0 +1,70 @@
+<main class="container">
+  <div class="col-sm-4">
+    <h2>
+      <span class="glyphicon glyphicon-calendar mleft_10 icon_big"></span>
+      <span>{{ month | date : 'MMM, yyyy' }}</span>
+      <span class='small'>overview</span>
+    </h2>
+    <div class='cleaner_20 tbdr'></div>
+    <div class="col-sm-6 countBlock clear_padding">
+        <span>Total Contree: </span><h3 class="clear_margin">{{ getMothlyTotal() }}</h3>
+    </div>
+    <div class="col-sm-6 countBlock clear_padding">
+        <span>Yet to come: </span><h3 class="clear_margin">{{ getMothlyTotal() - getMothlyRemaining() }}</h3>
+    </div>
+    <div class="col-sm-6 countBlock clear_padding">
+        <span>Remaining Contree: </span><h3 class="clear_margin">3500</h3>
+    </div>
+  </div>
+  <div class="col-sm-8 lbdr">
+      <div class="row">
+        <div class="col-sm-12">
+          <a href="/contree"><div class="closeIcon cleaner_20"><span class="btn btn-sm btn-default">Back</span></div></a>
+          <h2 class='text-primary left'><span class="glyphicon glyphicon-user mleft_10"></span>{{ memberCon.member[1] }}</h2>
+        </div>
+      </div>
+      <div class='cleaner_20'></div>
+
+      <div class="row">
+        <form name="editMemberContree" class="center-block container-fluid" novalidate>
+          <div class='row form-group' ng-form="monthContree" ng-class="{ 'has-error': monthContree.$dirty && monthContree.$invalid }">
+            <label class='col-sm-3 control-label text-right'>Contree to give<span ng-if='required'>*</span></label>
+            <div class='col-sm-5'>
+              <input ng-model='memberCon.monthContree[0]' type='{{memberCon.monthContree[1]}}' class='form-control' required />
+            </div>
+
+            <div class='col-sm-4 has-error' ng-show='monthContree.$dirty && monthContree.$invalid' ng-messages='monthContree.$error'>
+              <p class='control-label' ng-message='required'>This is required.</p>
+            </div>
+          </div>
+
+          <div class='row form-group' ng-form="contreeGiven" ng-class="{ 'has-error': contreeGiven.$dirty && contreeGiven.$invalid }">
+            <label class='col-sm-3 control-label text-right'>Contree to give<span ng-if='required'>*</span></label>
+            <div class='col-sm-5'>
+              <input ng-model='memberCon.contreeGiven[0]' type='{{memberCon.contreeGiven[1]}}' class='form-control' max='{{ LimitTo }}' required />
+            </div>
+
+            <div class='col-sm-4 has-error' ng-show='contreeGiven.$dirty && contreeGiven.$invalid' ng-messages='contreeGiven.$error'>
+              <p class='control-label' ng-message='required'>This is required.</p>
+            </div>
+          </div>
+          
+          <!-- <form-field record='memberCon' field='contreeGiven' live='false' required='true' max='monthContree'></form-field> -->
+
+          <div class="row form-group">
+            <label class='col-sm-3 control-label text-right'>Remaining Amount</label>
+            <div class="col-sm-5 text-danger">
+              {{ memberCon.monthContree[0] - memberCon.contreeGiven[0] }}
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-sm-5 col-sm-offset-3">
+              <button class="btn btn-primary btn-block" ng-click="update()" type="button">Update</button>
+            </div>
+          </div>
+          <center class="_msg successMsg"></center>
+        </form>
+      </div>
+  </div>
+</main>

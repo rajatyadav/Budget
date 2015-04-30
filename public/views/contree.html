@@ -6,32 +6,43 @@
       <span class='small'>overview</span>
     </h2>
     <div class='cleaner_20 tbdr'></div>
-    <div class="col-sm-6 countBlock clear_padding">
+    <div class="col-xs-6 countBlock clear_padding">
         <span>Total Contree: </span><h3 class="clear_margin">{{ getMothlyTotal() }}</h3>
     </div>
-    <div class="col-sm-6 countBlock clear_padding">
+    <div class="col-xs-6 countBlock clear_padding">
         <span>Yet to come: </span><h3 class="clear_margin">{{ getMothlyTotal() - getMothlyRemaining() }}</h3>
     </div>
-    <div class="col-sm-6 countBlock clear_padding">
+    <div class="col-xs-6 countBlock clear_padding">
         <span>Remaining Contree: </span><h3 class="clear_margin">3500</h3>
     </div>
   </div>
   <div class="col-sm-8 lbdr">
-      <div class="container-fluid">
+      <div class="">
+
         <div class="row memberContBlock" ng-repeat='memberContree in contree'>
-          <div class="col-sm-12"><a ng-click='show(memberContree.member[0])'>
-            <h3 class="clear_margin"><span class="glyphicon glyphicon-user mleft_10"></span>{{ memberContree.member[1] }}</h3>
-          </a></div>
+          <div class='container-fluid'>
+            <div class='row'>
+              <div class="col-xs-12">
+                <h3 class="clear_margin text-primary"><span class="glyphicon glyphicon-user mleft_10"></span>{{ memberContree.member[1] }}</h3>
+              </div>
+              <div class="col-xs-12">
+                <div class='subLink'><a class='text-muted' ng-click='showContree(memberContree.member[0])'>Update Contree</a></div>
+                <div class='subLink'><a class='text-muted' ng-click='showMember(memberContree.member[0])'>View</a></div>
+              </div>
+            </div>
+          </div>
           <div class='col-sm-12 cleaner_20'></div>
-          <div class="col-sm-12">
-            <div class="col-sm-4 clear_padding">
-              <span>Contree to Give: </span><h3 class="clear_margin">{{ memberContree.monthContree[0] }}</h3>
-            </div>
-            <div class="col-sm-4 clear_padding text-success">
-                <span>Already Gave: </span><h3 class="clear_margin">{{ memberContree.contreeGiven[0] }}</h3>
-            </div>
-            <div class="col-sm-4 clear_padding text-danger">
-                <span>Rest to Give: </span><h3 class="clear_margin">{{ memberContree.monthContree[0] - memberContree.contreeGiven[0] }}</h3>
+          <div class='container-fluid'>
+            <div class='row'>
+              <div class="col-xs-4 ">
+                <span>Contree to Give: </span><h3 class="clear_margin">{{ memberContree.monthContree[0] }}</h3>
+              </div>
+              <div class="col-xs-4">
+                  <span>Already Gave: </span><h3 class="clear_margin">{{ memberContree.contreeGiven[0] }}</h3>
+              </div>
+              <div class="col-xs-4">
+                  <span>Rest to Give: </span><h3 class="clear_margin">{{ memberContree.monthContree[0] - memberContree.contreeGiven[0] }}</h3>
+              </div>
             </div>
           </div>
         </div>

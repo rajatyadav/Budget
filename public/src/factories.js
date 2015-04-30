@@ -1,4 +1,12 @@
 angular.module('BudgetApp')
+  .service('User', function ($http) {
+    return {
+      get: function () {
+        return $http.get('/User');
+      },
+    }
+  })
+
 	.factory('Member', function ($resource) {
 			return $resource('/api/members/:id', {id : '@id'},{
         	'update': { method:'PUT'}	
@@ -17,6 +25,7 @@ angular.module('BudgetApp')
       }
   	}
 	})
+
   .factory('Expence', function ($resource) {
       return $resource('/api/expences/:id', {id : '@id'},{
           'update': { method:'PUT'},
@@ -52,7 +61,8 @@ angular.module('BudgetApp')
 
   .factory('Contree', function ($resource) {
       return $resource('/api/contree/:id', {id : '@id'},{
-          'update': { method:'PUT'}
+          'update': { method:'PUT'},
+          'get': { method:'GET'}
       });
   })
 

@@ -1,42 +1,48 @@
 <main class="container">
-    <div class="col-sm-4 col-sm-offset-4">
+    <div class="col-sm-4 " ng-class="{ 'col-sm-offset-4' : !memberSelected }">
       <h2>Listed Members</h2>
       <div class="cleaner_20"></div>
       <div class="list-group">
-        <a class="list-group-item" ng-repeat='member in members' ng-click='show(member._id)'> {{ member.firstName[0] }} {{ member.lastName[0] }} </a>
+        <a class="list-group-item" ng-repeat='member in members' ng-click='show(member._id, $index)'> {{ member.firstName[0] }} {{ member.lastName[0] }} </a>
         <a class="list-group-item text-primary-over" href='/newMember'><span class="glyphicon glyphicon-user mleft_10"></span>Add new member</a>
       </div>
     </div>
-    <!-- <div class="col-lg-8 lbdr">
+
+    <div class="col-sm-8 lbdr" ng-show='memberSelected'>
       <a ng-click='edit(selectedMember._id)'><div class="closeIcon"><span class="btn btn-sm btn-default">Edit</span></div></a>
-      <h2><span class="glyphicon glyphicon-user mleft_10 icon_big"></span>{{ selectedMember.firstName[0] }} {{ selectedMember.lastName[0] }}</h2>
+      <h2 class='text-primary'><span class="glyphicon glyphicon-user mleft_10 icon_big"></span>{{ selectedMember.firstName[0] }}  {{ selectedMember.lastName[0] }} </h2>
       <div>
-          <p class="clear_margin"><b>Address: </b>{{ selectedMember.address[0] }}</p>
-          <p><b>Contact: </b>{{ selectedMember.contact[0] }}</p>
+        <p class="clear_margin"><b>Address: </b>{{ selectedMember.address[0] }}</p>
+        <p><b>Contact: </b>{{ selectedMember.contact[0] }}</p>
       </div>
       <div class="clearfix">
-          <div class="col-lg-6 clear_padding">
-              <h3>Contree of this month: 7500</h3>
+        <div class="col-sm-6 clear_padding">
+          <h3>
+            <a href='/contree'>Contree for this month : </a> 
+            <span>{{ getMonthContree.monthContree[0] }}</span>
+          </h3>
+        </div>
+        <div class="col-sm-6">
+          <div class="col-sm-6">
+            <h3><span class="glyphicon glyphicon-arrow-up mleft_10"></span><span>{{ amountToTake }}</span></h3>
           </div>
-          <div class="col-lg-6">
-              <div class="col-lg-6">
-                  <h3><span class="glyphicon glyphicon-arrow-up mleft_10"></span><span>500</span></h3>
-              </div>
-              <div class="col-lg-6">
-                  <h3><span class="glyphicon glyphicon-arrow-down mleft_10"></span><span>0</span></h3>
-              </div>
+          <div class="col-sm-6">
+            <h3><span class="glyphicon glyphicon-arrow-down mleft_10"></span><span>{{ getMonthContree.monthContree[0] - getMonthContree.contreeGiven[0] }}</span></h3>
           </div>
+        </div>
       </div>
-      <div>
+        <div>
           <div class="cleaner_20"></div>
-          <h5>Rescent Expences</h5>
+          <h3 class='text-muted'>Rescent expences</h3>
+          <div class="cleaner_20 tbdr"></div>
           <table class="table">
             <thead>
               <tr class="active">
                 <th>#</th>
                 <th>Money</th>
-                <th>Description</th>
+                <th class='col-md-3'>Description</th>
                 <th>Time</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -45,9 +51,13 @@
                 <td>{{ expence.expenceAmount }}</td>
                 <td>{{ expence.expenceDetail }}</td>
                 <td>{{ expence.timestamp | date : "mediumDate" }}</td>
+                <td class='bg-info text-center' ng-switch='expence.payStatus'>
+                  <label ng-switch-when='true'>Paid</label>
+                  <label ng-switch-when='false'><a ng-click='payStatusUpdate(expence._id, $index)'>Unpaid</a></label>
+                </td>
               </tr>
             </tbody>
           </table>
+        </div>
     </div>
-    </div> -->
 </main>

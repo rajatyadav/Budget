@@ -1,6 +1,11 @@
 angular.module('BudgetApp')
+		
 
-		.controller('DashboardController', function ($scope, Member, Expence, Contree, $location, $filter) {
+		.controller('DashboardController', function ($rootScope, User, $scope, Member, Expence, Contree, $location, $filter) {
+				$rootScope.PAGE = 'dashboard';
+				User.get().success(function(result) {
+					$rootScope.USERNAME = result;
+				});
 				$scope.members = Member.query();
 				$scope.selectedMember = 'Select Member';
 				$scope.rescentExpences = Expence.query().reverse();
@@ -82,19 +87,17 @@ angular.module('BudgetApp')
 				}
 		})
 
-		.controller('MembersController', function ($scope, Member, $location, $rootScope) {
+		.controller('MembersController', function ($rootScope, $scope, Member, SelectedMemberDetail, Expence, SelectedExpence, SelectedMemberExpence, Contree, $location, $routeParams, $filter) {
 				$rootScope.PAGE = "members";
+				$scope.memberSelected = false;
 				$scope.members = Member.query();
 
-				$scope.show = function (user_id) {
-					$location.url('/member/'+user_id);
-				}
-		})
+				// $scope.show = function (user_id) {
+					
+				// 	$scope.selectedMember = Member.get({ id: user_id });
+				// 	$scope.getMonthContree = Contree.get({ id : user_id });
+				// }
 
-		.controller('MemberViewController', function ($scope, Member, SelectedMemberDetail, Expence, SelectedExpence, SelectedMemberExpence, $location, $routeParams) {
-				$scope.members = Member.query();
-				$scope.selectedMember = Member.get({ id: $routeParams.id });
-				
 				$scope.ShowDetails = function () {
 					$scope.amountToTake = 0;
 					for(var i=0; i < $scope.rescentExpences.length; i++) {
@@ -111,11 +114,14 @@ angular.module('BudgetApp')
 						})
 
 
-				$scope.show = function (user_id) {
-					SelectedMemberDetail.get(user_id)
-						.success(function (result) {
-							$scope.selectedMember = result;
-						})
+				$scope.show = function (user_id, index) {
+					$scope.memberSelected = true;
+					$scope.selectedMember = $scope.members[index];
+					$scope.getMonthContree = Contree.get({  id : user_id });
+					// SelectedMemberDetail.get(user_id)
+					// 	.success(function (result) {
+					// 		$scope.selectedMember = result;
+					// 	})
 					SelectedMemberExpence.get( user_id )
 						.success(function (result) {
 							$scope.rescentExpences = result;
@@ -134,7 +140,7 @@ angular.module('BudgetApp')
 						member 				: $scope.rescentExpences[index].member,
 						expenceAmount	: $scope.rescentExpences[index].expenceAmount, 
 						expenceDetail : $scope.rescentExpences[index].expenceDetail,
-						timestamp 		: $scope.rescentExpences[index].timestamp,
+						timestamp 		: $filter('date')($scope.rescentExpences[index].timestamp, "yyyy-MM-dd"),
 						payStatus 		: true
 					});
 					
@@ -148,7 +154,69 @@ angular.module('BudgetApp')
 				}
 		})
 
-		.controller('NewMemberController', function ($scope, Member, $location) {
+		.controller('MemberViewController', function ($rootScope, $scope, Member, SelectedMemberDetail, Expence, SelectedExpence, SelectedMemberExpence, Contree, $location, $routeParams, $filter) {
+				$rootScope.PAGE = "members";
+				$scope.members = Member.query();
+				$scope.selectedMember = Member.get({ id: $routeParams.id });
+				$scope.getMonthContree = Contree.get({ id : $routeParams.id });
+
+				$scope.ShowDetails = function () {
+					$scope.amountToTake = 0;
+					for(var i=0; i < $scope.rescentExpences.length; i++) {
+						if( !$scope.rescentExpences[i].payStatus ) {
+							$scope.amountToTake += $scope.rescentExpences[i].expenceAmount;
+						}
+					}
+				}
+
+				SelectedMemberExpence.get( $routeParams.id )
+						.success(function (result) {
+							$scope.rescentExpences = result;
+							$scope.ShowDetails();
+						})
+
+
+				$scope.show = function (user_id, index) {
+					$scope.selectedMember = $scope.members[index];
+					$scope.getMonthContree = Contree.get({  id : user_id });
+					// SelectedMemberDetail.get(user_id)
+					// 	.success(function (result) {
+					// 		$scope.selectedMember = result;
+					// 	})
+					SelectedMemberExpence.get( user_id )
+						.success(function (result) {
+							$scope.rescentExpences = result;
+							$scope.ShowDetails();
+						})
+				}
+
+				$scope.edit = function (user_id) {
+					$location.url('/editMember/'+user_id);
+				}
+
+
+				// Working Here
+				$scope.payStatusUpdate = function (id, index) {
+					$scope.updatedExpence = new Expence({
+						member 				: $scope.rescentExpences[index].member,
+						expenceAmount	: $scope.rescentExpences[index].expenceAmount, 
+						expenceDetail : $scope.rescentExpences[index].expenceDetail,
+						timestamp 		: $filter('date')($scope.rescentExpences[index].timestamp, "yyyy-MM-dd"),
+						payStatus 		: true
+					});
+					
+					$scope.updatedExpence.$update({ id });
+					
+					SelectedMemberExpence.get( $routeParams.id )
+					.success(function (result) {
+						$scope.rescentExpences = result;
+						$scope.ShowDetails()
+					})
+				}
+		})
+
+		.controller('NewMemberController', function ($rootScope, $scope, Member, $location) {
+				$rootScope.PAGE = "members";
 				$scope.members = Member.query();
 				$scope.edit = function (user_id) {
 					$location.url('/editMember/'+user_id);
@@ -172,7 +240,8 @@ angular.module('BudgetApp')
 				};
 		})
 		
-		.controller('EditMemberController', function ($scope, Member, $location, $routeParams) {
+		.controller('EditMemberController', function ($rootScope, $scope, Member, $location, $routeParams) {
+				$rootScope.PAGE = "members";
 				$scope.members = Member.query();
 				$scope.member = Member.get({ id : $routeParams.id });
 
@@ -199,7 +268,8 @@ angular.module('BudgetApp')
 				};
 		})
 
-		.controller('ContreeController', function ($scope, Contree, $location) {
+		.controller('ContreeController', function ($rootScope, $scope, Contree, $location) {
+				$rootScope.PAGE = "contree";
 				$scope.month = new Date();
 				$scope.contree = Contree.query();
 
@@ -221,12 +291,16 @@ angular.module('BudgetApp')
 			    return MothlyRemaining;
 				};
 
-				$scope.show = function (memberId) {
+				$scope.showContree = function (memberId) {
 					$location.url('/contree/' + memberId);
+				}
+				$scope.showMember = function (memberId) {
+					$location.url('/member/' + memberId);
 				}
 		})
 
-		.controller('EditContreeController', function ($scope, Contree, $location, $routeParams) {
+		.controller('EditContreeController', function ($rootScope, $scope, Contree, $location, $routeParams) {
+				$rootScope.PAGE = "contree";
 				$scope.month = new Date();
 				$scope.contree = Contree.query();
 				Contree.get({ id : $routeParams.memberId }, function(result) {
@@ -264,7 +338,8 @@ angular.module('BudgetApp')
 				};
 		})
 
-		.controller('NewContreeController', function ($scope, Member, Contree, $location) {
+		.controller('NewContreeController', function ($rootScope, $scope, Member, Contree, $location) {
+				$rootScope.PAGE = "contree";
 				$scope.month = new Date();
 				$scope.contree = Contree.query();
 				$scope.memberCon = new Contree({
@@ -313,7 +388,8 @@ angular.module('BudgetApp')
 				}
 		})
 
-		.controller('TodayExpenceController', function ($scope, Member, Expence, $location) {
+		.controller('TodayExpenceController', function ($rootScope, $scope, Member, Expence, $location) {
+				$rootScope.PAGE = "expences";
 				$scope.members = Member.query();
 				$scope.selectedMember = 'Select Member';
 				$scope.rescentExpences = Expence.query().reverse();
@@ -348,7 +424,8 @@ angular.module('BudgetApp')
 				}
 		})
 
-		.controller('MonthlyExpenceController', function ($scope, SelectedTimeExpence, $filter ) {
+		.controller('MonthlyExpenceController', function ($rootScope, $scope, SelectedTimeExpence, $filter ) {
+				$rootScope.PAGE = "expences";
 				$scope.getExpences = function (date) {
 					SelectedTimeExpence.get( date )
 						.success(function (result) {
@@ -358,7 +435,7 @@ angular.module('BudgetApp')
 
 				var today = new Date();
 				$scope.date = $filter('date')(today, "mediumDate");
-				$scope.getExpences($filter('date')(today, "yyyy-MM-dd"));
+				// $scope.getExpences($filter('date')(today, "yyyy-MM-dd"));
 				$scope.calendar = angular.element('.calendar');
 				$scope.calendar.bind('changeDate', function(e){
 	      		$scope.date = $filter('date')(e.format('yyyy-mm-dd'), "mediumDate");

@@ -24,7 +24,11 @@
             <td>{{ expence.expenceAmount }}</td>
             <td>{{ expence.expenceDetail }}</td>
             <td>{{ expence.member[1] }}</td>
-            <td>{{ expence.timestamp | date : "shortTime" }}</td>
+            <td class='bg-info text-center' ng-switch='expence.payStatus'>
+                <label ng-switch-when='true'>Paid</label>
+                <label ng-switch-when='false'>Unpaid</label>
+              </td>
+            <!-- <td>{{ expence.timestamp | date : "shortTime" }}</td> -->
           </tr>
         </tbody>
       </table>

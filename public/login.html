@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>login</title>
+
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <header>
+      <centre>
+         <div class="header_text"><b>Monthly Budget</b></div>
+      </centre>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- Block left -->
+          <div class="col-lg-6 col-sm-6">
+            <div class='cleaner_50'></div>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
+              <h3>
+                <span class='strong'>Hi again,</span>
+                <span class='text_sm form_tag small'>sign in</span>
+              </h3>
+              
+              <form class="form-horizontal offset_top_20" action="/login" method="POST">
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <input type="text" name="username" placeholder="Username" class="form-control" required="" autofocus>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <input type="password" name="password" placeholder="Password" class="form-control" required="">
+                    </div>
+                  </div>
+                  <div class='row form-group'>
+                    <div class="checkbox col-sm-12">  
+                      <label class='pull-left'>
+                        <input name='remember' type='checkbox' value='remember me'>Remember me
+                      </label>
+                      <a href="#" class="big-link primary pull-right" data-reveal-id="reset_password" >Forgot password?</a>
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                        <button class="btn btn-primary btn-block"> Log In </button>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div> <!-- Block left -->
+          <!-- Block right -->
+          <div class="col-lg-6 col-sm-6">
+            <div class='cleaner_50'></div>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12">
+              <h3>
+                <span class='strong'>Welcome,</span>
+                <span class='text_sm form_tag small'>sign up</span>
+              </h3>
+              <form class="form-horizontal offset_top_20" action="/register" method="POST">
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <input type="text" name="username" placeholder="Username" class="form-control" required="">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <input type="email" name="email" placeholder="Email" class="form-control" required="">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      <input type="password" name="password" placeholder="Password" class="form-control" required="">
+                    </div>
+                  </div>
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                        <button class="btn btn-primary btn-block"> Sign Up </button>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div> <!-- Block right -->
+        </div>
+      </div> <!-- /Row -->
+    </main><!-- /Container -->
+
+    <footer class="panel-footer text-center">&copy; Rajat Yadav</footer>
+  </div>
+
+  <script type="text/javascript" src='lib/jquery/dist/jquery.min.js'></script>
+  <script type="text/javascript" src='lib/bootstrap/dist/js/bootstrap.js'></script>
+</body>
+</html>

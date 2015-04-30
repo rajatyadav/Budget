@@ -23,30 +23,8 @@
 	</header>
 
 	<div class='container-fluid'>
-		<div class="row navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#"><b>Welcome Rajat</b></a>
-          </div>
-          <div class="navbar-collapse bs-navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li id="dashboard"><a href="/dashboard">Dashboard</a></li>
-              <li id="members"><a href="/members">Members</a></li>
-              <li id="contree"><a href="/contree">Contree</a></li>
-              <!-- <li id="t_expences"><a href="/todayExpences">Today's expences</a></li> -->
-							<li id="m_expences"><a href="/monthlyExpences">Expences</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="../navbar-fixed-top/">Logout</a></li>
-            </ul>
-          </div>
-        </div>
+		<div class="row" role="navigation">
+      <div ng-include='"views/nav.html"'></div>
     </div>
 		<div class='row' ng-view></div>
 	</div>
