@@ -4,14 +4,24 @@ Notes
 
 To Do
 -------------
+UI Requirements
+  - Show total expenditure calculation in contree.
+
+
+
 Resolve timezone problem
 
 1. Limit max number contree to enter
 2. Restrict to add multiple contree for same month
+3. Show expence of this month only
 
 
 Done
 	Combime '/member' and '/member:id' page
+	Add remaining contree calculation
+	Show member expence sum in member profile.
+	Add "all expence" in dashboard.
+	Add "view this month" in expences.
 
 
 

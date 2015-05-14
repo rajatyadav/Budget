@@ -4,6 +4,7 @@
       <p class='text-primary'>Select date to get the details.</p>
       <div class="cleaner_20"></div>
       <div class='calendar' ng-model='calendar'></div>
+      <div class='btn btn-block btn-default' ng-click='getThisMonthExpence()'>Expences of {{ month | date : 'MMM, yyyy' }}</div>
     </div>
     <div class="col-sm-8 lbdr">
       <h2><span class="glyphicon glyphicon-list mleft_10 icon_big"></span>Expence on <span class='text-primary'>{{ date }}</span></h2>
@@ -16,6 +17,7 @@
             <th class='col-md-3'>Description</th>
             <th>Member</th>
             <th>Time</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -23,7 +25,8 @@
             <td>{{ $index + 1 }}</td>
             <td>{{ expence.expenceAmount }}</td>
             <td>{{ expence.expenceDetail }}</td>
-            <td>{{ expence.member[1] }}</td>
+            <td><a ng-click='show(expence.member[0])'>{{ expence.member[1] }}<a></td>
+            <td>{{ expence.timestamp | date : "mediumDate" }}</td>
             <td class='bg-info text-center' ng-switch='expence.payStatus'>
                 <label ng-switch-when='true'>Paid</label>
                 <label ng-switch-when='false'>Unpaid</label>

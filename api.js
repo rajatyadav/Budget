@@ -131,7 +131,22 @@ router
 					res.json(data);
 				});
 		});
-			
+
+router.get('/monthExpence/:date', function(req, res){
+  var end = new Date( req.params.date ),
+    	dateParts = req.params.date.split('-'),
+    	y = parseInt(dateParts[0], 10),
+    	m = parseInt(dateParts[1], 10),
+    	d = parseInt(dateParts[2], 10),
+    	start = new Date(y, m-1, 1);  
+  req.dbDateQuery = {timestamp: { $gte: start, $lt: end },  userId : req.user._id}; //added
+	
+	var collection = db.get('memberExpences');
+	collection.find(req.dbDateQuery, function (err, data) {
+		res.json(data);
+	});
+	
+});			
 
 router
 	.use(bodyParser.json())

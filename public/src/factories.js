@@ -58,6 +58,13 @@ angular.module('BudgetApp')
       }
   	}
 	})
+  .service('ThisMonthExpence', function ($http) {
+    return {
+      get : function( date ) {
+        return $http.get('/api/monthExpence/'+date); 
+      }
+    }
+  })
 
   .factory('Contree', function ($resource) {
       return $resource('/api/contree/:id', {id : '@id'},{

@@ -54,16 +54,20 @@
             <a href='/contree'>Total Contree: </a><h3 class="clear_margin">{{ getMothlyTotal() }}</h3>
         </div>
         <div class="col-sm-4 countBlock clear_padding">
-            <a href='/contree'>Yet to come: </a><h3 class="clear_margin">{{ getMothlyTotal() - getMothlyRemaining() }}</h3>
+            <a href='/contree'>Yet to come: </a><h3 class="clear_margin">{{ getMothlyTotal() - getGivenContree() }}</h3>
         </div>
         <div class="col-sm-4 countBlock clear_padding">
-            <span>Remaining Contree: </span><h3 class="clear_margin">3500</h3>
+            <span>Remaining Contree: </span><h3 class="clear_margin">{{ getGivenContree() - getContreeExpence() }}</h3>
         </div>
       </div>
 
       <div class="cleaner_20"></div>
       
-      <h2><span class="glyphicon glyphicon-list mleft_10 icon_big"></span>Rescent expences</h2>
+      <h2>
+        <span class="glyphicon glyphicon-list mleft_10 icon_big"></span>
+        <span>Rescent expences</span>
+        <span class="btn btn-default pull-right" ng-click="displayLength()">{{ displayMsg }}</span>
+      </h2>
       <div class="cleaner_20 tbdr"></div>
       <div class="dashboard_expences">
         <table class="table">
@@ -78,7 +82,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat='expence in rescentExpences | reverse | limitTo: 6 '>
+            <tr ng-repeat='expence in allExpences | limitTo: maxItems '>
               <td><label>{{ $index + 1 }}</label></td>
               <td>{{ expence.expenceAmount }}</td>
               <td>{{ expence.expenceDetail }}</td>
